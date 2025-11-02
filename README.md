@@ -1,6 +1,6 @@
 <div align="center">
   <h1>
-    🏓 ft_transcendence (42 project)
+    🏓 ft_transcendence
   </h1>
   <p>
     <b><i>We are Team Babylonians.</i></b>
@@ -34,8 +34,7 @@ We picked 8 major modules and 4 minor modules. A minor modules is worth half a m
 - Multiple Browser Compatibility - Our Transcendence works on multiple browsers (though Firefox is its native one).
 
 ## Usage
-- You can simply clone this repo to your machine:
-`git clone https://github.com/kixikCodes/ft_transcendence`
+- You can simply clone this repo to your machine.
 
 - You must make a .env file in the root of the repository with these variables:
 ```
@@ -66,4 +65,3 @@ SLACK_WEBHOOK_URL=[Slack Webhook URL for Alert Manager]
 
 **Betül Büber** - DevOps and monitoring systems, playtesting.
 
-Special Thanks: [SkyeCodes](https://github.com/skyecodes) for help with profile picture system implementation, playtesting and providing a server to host the project for online testing.
