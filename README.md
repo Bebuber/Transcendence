@@ -33,7 +33,7 @@
 
 ## About
 
-**ft_transcendence** is the final project of the 42 Common Core — a full-stack multiplayer Pong game built from scratch. The team implemented a faithful recreation of the original 1972 Pong with modern features: 3D rendering, online multiplayer, live chat, an AI opponent, a full user management system with 2FA, and a production-grade DevOps monitoring stack.
+**ft_transcendence** is the final project of the 42 Common Core, a full-stack multiplayer Pong game built from scratch. The team implemented a faithful recreation of the original 1972 Pong with modern features: 3D rendering, online multiplayer, live chat, an AI opponent, a full user management system with 2FA, and a production-grade DevOps monitoring stack.
 
 The project is scored via optional Major and Minor modules on top of the mandatory base. With **10 major + 3 minor modules**, the team achieved the **maximum grade of 125%**.
 
@@ -204,9 +204,9 @@ Monitoring dashboards are available at `http://localhost:3001/` (Grafana).
 
 | Name | GitHub | Contributions |
 |---|---|---|
-| Jacob Graf | [@jgraf](https://github.com/jgraf-42) | Game design, game logic, 3D rendering, AI opponent, gamemodes, playtesting |
-| Tobias Keil | [@kixikCodes](https://github.com/Cimex404) | Backend architecture, WebSockets, remote players, database, live chat, dashboard, friend/block system |
-| Noel Monzon | [@N03l-MG](https://github.com/N03l-MG) | Cybersecurity, auth & authorization, 2FA, JWT/cookie management, API protection, UI design, sound design, documentation |
+| Jacob Graf | [@jgraf](https://github.com/Cimex404) | Game design, game logic, 3D rendering, AI opponent, gamemodes, playtesting |
+| Tobias Keil | [@kixikCodes](https://github.com/tmkeil) | Backend architecture, WebSockets, remote players, database, live chat, dashboard, friend/block system |
+| Noel Monzon | [@N03l-MG](https://github.com/KixiKcodes) | Cybersecurity, auth & authorization, 2FA, JWT/cookie management, API protection, UI design, sound design, documentation |
 | Betül Büber | [@bebuber](https://github.com/Bebuber) | DevOps monitoring stack (Prometheus, Grafana, Alertmanager, Slack integration, nginx-exporter, backend metrics) |
 
 ---
