@@ -1,67 +1,214 @@
 <div align="center">
-  <h1>
-    🏓 ft_transcendence
-  </h1>
-  <p>
-    <b><i>We are Team Babylonians.</i></b>
-  </p>
+  <h1>🏓 ft_transcendence</h1>
+  <p><b><i>We are Team Babylonians.</i></b></p>
 </div>
 
-## About
-This is the final project of the 42 Common Core. It is meant to put all of our skills to the test by making a full-stack web application with tons of features. The premise is to make our own version of Pong with some modern features of our choice. The project is comprised of a mandatory part and optional Major and Minor modules which count toward the final score.
+<div align="center">
 
-## Base Features
-The basic features that Transcendence had to have are a local game of pong between two players and a round-based tournament system between multiple players. The gameplay must be faithful to that of the original 1972 game. How the tournament system works exactly is left up to us to decide, so we took some liberties there. Our website has to be secure and protected against SQL injections and malicious API calls. I focused primarily on this aspect, creating the login/register flow, 2FA system, JWT and cookie management and API protection with Authorization pre-handlers.
+![Language](https://img.shields.io/badge/language-TypeScript-3178c6.svg)
+![Backend](https://img.shields.io/badge/backend-Fastify-000000.svg)
+![Frontend](https://img.shields.io/badge/graphics-Babylon.js-e0684b.svg)
+![Database](https://img.shields.io/badge/database-SQLite-003b57.svg)
+![Infra](https://img.shields.io/badge/infra-Docker-2496ed.svg)
+![Monitoring](https://img.shields.io/badge/monitoring-Prometheus%20%2B%20Grafana-e6522c.svg)
+![School](https://img.shields.io/badge/42-Heilbronn-black.svg)
+![Grade](https://img.shields.io/badge/grade-125%25-brightgreen.svg)
+
+</div>
+
+---
+
+## Table of Contents
+
+- [About](#about)
+- [Tech Stack](#tech-stack)
+- [Modules](#modules)
+- [Architecture](#architecture)
+- [DevOps & Monitoring](#devops--monitoring)
+- [Setup & Usage](#setup--usage)
+- [Makefile Reference](#makefile-reference)
+- [Team](#team)
+
+---
+
+## About
+
+**ft_transcendence** is the final project of the 42 Common Core — a full-stack multiplayer Pong game built from scratch. The team implemented a faithful recreation of the original 1972 Pong with modern features: 3D rendering, online multiplayer, live chat, an AI opponent, a full user management system with 2FA, and a production-grade DevOps monitoring stack.
+
+The project is scored via optional Major and Minor modules on top of the mandatory base. With **10 major + 3 minor modules**, the team achieved the **maximum grade of 125%**.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | TypeScript, Vite, Tailwind CSS, Babylon.js |
+| Backend | Node.js, Fastify |
+| Database | SQLite |
+| Auth | JWT, Cookie sessions, Google Authenticator (TOTP) |
+| Networking | WebSockets, Nginx reverse proxy, HTTPS (self-signed SSL) |
+| Monitoring | Prometheus, Grafana, Alertmanager |
+| Infra | Docker, Docker Compose |
+
+---
 
 ## Modules
-We picked 9 major modules and 4 minor modules. A minor module is worth half a major one, thus adding up to a total of 11 module points. The requirement for 100% grade is 7, meaning we have the maximum bonus of 125%.
 
-### Major Modules:
-- **Backend Framework (Fastify)** - Our backend routes and endpoints use a Fastify for JavaScript.
-- **Remote Authentication** - There is support for the Google Authenticator as a 3rd party authentication.
-- **Remote Players** - The game can be played online with remote players via use of web sockets.
-- **Live Chat** - There is a live chat system where players can send messages, game invites and view eachother's statistics.
-- **User Dashboard and Statistics** - There is a dynamic dashboard where users can view eachother's statistics and can send friend requests. There is also a profile picture system and a blocking system.
-- **AI Opponent** - An additional mode where players can play endlessly against an AI with three different difficulty settings.
-- **Two-Factor Authentication and JWTs** - Sessions are stored with browser cookies and verified using JSON Web Tokens. Users can activate 2FA and scan a QR to link their Google Authenticator to their profile.
-- **3D Graphics (Babylon)** - The game is rendered in 3D using a graphical library called Babylon.js (which is where our team got its name from).
-- **Server-Side Pong API** - In conjunction with the remote players system we calculate the game's data such as paddle positions and ball velocity on the server and broadcast to the clients via a custom API.
+### Major Modules (×10)
 
-### Minor Modules:
-- **Frontend Framework** (Tailwind and Vite) - The frontend uses Tailwind CSS for UI design and rendering, as well as Vite for fast reload.
-- **Database Implementation (sqlite)** - We use a database to store user data, friend and block data and game data.
-- **DevOps Monitoring System (Prometheus, Grafana and Alert Manager)** - Three additional containers have been set up to gather metrics and display them. There is also an alert system linked to a custom Slack channel.
-- **Multiple Browser Compatibility** - Our Transcendence works on multiple browsers (though Firefox is its native one).
+| Module | Description |
+|---|---|
+| **Backend Framework** | REST API and route handling built with Fastify |
+| **Remote Authentication** | Google Authenticator support as a third-party auth provider |
+| **Remote Players** | Online multiplayer via WebSockets with real-time synchronization |
+| **Live Chat** | In-app chat with messaging, game invites, and user stat previews |
+| **User Dashboard & Statistics** | Player profiles, match history, friend requests, profile pictures, and a blocking system |
+| **AI Opponent** | Play against an AI with three difficulty settings |
+| **2FA & JWTs** | Session management via HTTP-only cookies and JWTs; optional 2FA via QR-linked Authenticator app |
+| **3D Graphics** | Game rendered in 3D using Babylon.js (the origin of the team name) |
+| **Server-Side Pong API** | Game state (ball physics, paddle positions) calculated server-side and broadcast to clients |
+| **DevOps Monitoring** | Prometheus + Grafana + Alertmanager stack with exporters, custom dashboards, alert rules, and Slack integration |
 
-## Usage
-- You can simply clone this repo to your machine.
+### Minor Modules (×3)
 
-- You must make a .env file in the root of the repository with these variables:
+| Module | Description |
+|---|---|
+| **Frontend Framework** | Tailwind CSS for styling, Vite for fast HMR and bundling |
+| **Database** | SQLite for persistent user, game, and social data |
+| **Multi-Browser** | Tested across multiple browsers (Firefox-native) |
+
+---
+
+## Architecture
+
 ```
-JWT_SECRET=[JSON Web Token Secret Key]
+                        ┌─────────────────────────────────────┐
+                        │           Docker Network             │
+                        │                                      │
+  Browser ──HTTPS──▶  nginx (8443)                            │
+                        │  ├──▶  frontend (5173)  [Vite/TS]   │
+                        │  └──▶  backend  (3000)  [Fastify]   │
+                        │           └──▶  SQLite              │
+                        │                                      │
+                        │  ── Monitoring Stack ──              │
+                        │  prometheus    (9090)                │
+                        │  grafana       (3001)                │
+                        │  alertmanager  (9093)  ──▶  Slack    │
+                        │  nginx-exporter(9113)                │
+                        └─────────────────────────────────────┘
+```
 
-GF_SECURITY_ADMIN_USER=[Grafana Admin Username]
-GF_SECURITY_ADMIN_PASSWORD=[Grafana Admin Password]
+---
+
+## DevOps & Monitoring
+
+> Implemented by [bebuber](https://github.com/Bebuber)
+
+The monitoring stack runs as four additional Docker containers fully integrated into the compose network. It observes the nginx, backend, Grafana, Alertmanager, and Prometheus services themselves.
+
+### Prometheus
+
+Scrapes metrics from all services on a 15-second interval. Data is retained for 15 days via persistent volume. Scrape targets:
+
+| Job | Target | What it tracks |
+|---|---|---|
+| `prometheus` | localhost:9090 | Prometheus self-metrics |
+| `nginx` | nginx-exporter:9113 | HTTP request rates, connections |
+| `backend` | backend:3000 | Fastify route-level metrics (via `fastify-metrics`) |
+| `grafana` | grafana:3000 | Grafana internals |
+| `alertmanager` | alertmanager:9093 | Alert pipeline metrics |
+
+### Grafana
+
+Auto-provisioned via config files — no manual dashboard setup needed on first boot. Dashboards include:
+
+- **Targets Up** — live service health across all jobs
+- **Backend 5xx Errors (5m)** — rolling error rate per route
+- **HTTP request throughput** per handler
+
+### Alertmanager
+
+Fires alerts to a **custom Slack channel** via webhook. The Slack webhook URL is injected at runtime via a custom entrypoint script that performs environment variable substitution before Alertmanager starts — avoiding secrets in committed config files.
+
+Current alert rules:
+
+| Alert | Condition | Severity |
+|---|---|---|
+| `BackendDown` | Backend job unreachable for 20s | critical |
+
+### nginx-exporter
+
+A dedicated `nginx/nginx-prometheus-exporter` sidecar container scrapes Nginx's `stub_status` endpoint and exposes it in Prometheus format, bridging Nginx's native metrics into the monitoring stack.
+
+---
+
+## Setup & Usage
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) and Docker Compose (v2+)
+- A Slack webhook URL (optional — only required for Alertmanager notifications)
+
+### 1. Clone
+
+```bash
+git clone https://github.com/Bebuber/Transcendence.git
+cd Transcendence
+```
+
+### 2. Create `.env`
+
+Create a `.env` file in the project root:
+
+```env
+JWT_SECRET=your_jwt_secret_key
+
+GF_SECURITY_ADMIN_USER=admin
+GF_SECURITY_ADMIN_PASSWORD=your_grafana_password
 GF_AUTH_ANONYMOUS_ENABLED=false
 GF_USERS_ALLOW_SIGN_UP=true
 
-SLACK_WEBHOOK_URL=[Slack Webhook URL for Alert Manager]
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/...
 ```
 
-- Then you can use the Makefile to quickly build everything:
-`make build`
-(You can use `make help` for info on additional Make commands)
+### 3. Build & Run
 
-- Once everything is up, you can navigate to `https://localhost:8443/` and bypass the warning regarding the self-signed SSL certificate.
+```bash
+make build
+```
 
-- You are up and running!
+### 4. Open
 
-## Credits
-**Jacob Graf** - Game design, game logic, 3D graphics, user statistics, general project architecture, implementation of all gamemodes, playtesting.
+Navigate to `https://localhost:8443/` and accept the self-signed certificate warning.
 
-**Tobias Keil** - Website routing and web sockets, networking and remote player systems, database and backend setup, general project architecture, live chat and dashboard implementations, user friending, blocking and invites system, playtesting.
+Monitoring dashboards are available at `http://localhost:3001/` (Grafana).
 
-**Noel Monzon** - Cybersecurity, user registration flow, authentication and authorization systems, user settings, frontend and UI design, project management, sound design and music, playtesting, documentation.
+---
 
-**Betül Büber** - DevOps and monitoring systems, playtesting.
+## Makefile Reference
 
+| Command | Description |
+|---|---|
+| `make build` | Build all Docker images and start all services |
+| `make up` | Start already-built services |
+| `make down` | Stop all services |
+| `make re` | Stop and rebuild all services |
+| `make prune` | Full teardown including volumes and database |
+| `make reset` | Prune then rebuild from scratch |
+| `make help` | Show available commands |
+
+---
+
+## Team
+
+| Name | GitHub | Contributions |
+|---|---|---|
+| Jacob Graf | [@jgraf](https://github.com/jgraf-42) | Game design, game logic, 3D rendering, AI opponent, gamemodes, playtesting |
+| Tobias Keil | [@kixikCodes](https://github.com/Cimex404) | Backend architecture, WebSockets, remote players, database, live chat, dashboard, friend/block system |
+| Noel Monzon | [@N03l-MG](https://github.com/N03l-MG) | Cybersecurity, auth & authorization, 2FA, JWT/cookie management, API protection, UI design, sound design, documentation |
+| Betül Büber | [@bebuber](https://github.com/Bebuber) | DevOps monitoring stack (Prometheus, Grafana, Alertmanager, Slack integration, nginx-exporter, backend metrics) |
+
+---
+
+*42 Heilbronn — Group Project — 125%*
