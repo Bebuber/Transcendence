@@ -84,18 +84,18 @@ The project is scored via optional Major and Minor modules on top of the mandato
 
 ```
                         ┌─────────────────────────────────────┐
-                        │           Docker Network             │
-                        │                                      │
+                        │           Docker Network            │
+                        │                                     │
   Browser ──HTTPS──▶  nginx (8443)                            │
                         │  ├──▶  frontend (5173)  [Vite/TS]   │
                         │  └──▶  backend  (3000)  [Fastify]   │
                         │           └──▶  SQLite              │
-                        │                                      │
-                        │  ── Monitoring Stack ──              │
-                        │  prometheus    (9090)                │
-                        │  grafana       (3001)                │
-                        │  alertmanager  (9093)  ──▶  Slack    │
-                        │  nginx-exporter(9113)                │
+                        │                                     │
+                        │  ── Monitoring Stack ──             │
+                        │  prometheus    (9090)               │
+                        │  grafana       (3001)               │
+                        │  alertmanager  (9093)  ──▶  Slack   │
+                        │  nginx-exporter(9113)               │
                         └─────────────────────────────────────┘
 ```
 
