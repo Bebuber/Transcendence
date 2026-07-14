@@ -205,8 +205,8 @@ Monitoring dashboards are available at `http://localhost:3001/` (Grafana).
 | Name | GitHub | Contributions |
 |---|---|---|
 | Jacob Graf | [@jgraf](https://github.com/Cimex404) | Game design, game logic, 3D rendering, AI opponent, gamemodes, playtesting |
-| Tobias Keil | [@kixikCodes](https://github.com/tmkeil) | Backend architecture, WebSockets, remote players, database, live chat, dashboard, friend/block system |
-| Noel Monzon | [@N03l-MG](https://github.com/KixiKcodes) | Cybersecurity, auth & authorization, 2FA, JWT/cookie management, API protection, UI design, sound design, documentation |
+| Tobias Keil | [@tkeil](https://github.com/tmkeil) | Backend architecture, WebSockets, remote players, database, live chat, dashboard, friend/block system |
+| Noel Monzon | [@nmonzon](https://github.com/KixiKcodes) | Cybersecurity, auth & authorization, 2FA, JWT/cookie management, API protection, UI design, sound design, documentation |
 | Betül Büber | [@bebuber](https://github.com/Bebuber) | DevOps monitoring stack (Prometheus, Grafana, Alertmanager, Slack integration, nginx-exporter, backend metrics) |
 
 ---
